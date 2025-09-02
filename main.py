@@ -1,3 +1,4 @@
+%%writefile main.py
 
 import joblib
 import streamlit as st
@@ -6,7 +7,7 @@ import pandas as pd
 # --- Configuración de la Página ---
 # Esto debe ser lo primero que se ejecute en el script.
 st.set_page_config(
-    page_title="Predictor de porcentaje de sílica",
+    page_title="Predictor de procentaje de sílica",
     page_icon="🧪",
     layout="wide"
 )
@@ -25,7 +26,6 @@ def load_model(model_path):
         return None
 
 # Cargamos nuestro modelo campeón. Streamlit buscará en la ruta 'model.joblib'.
-# Asegúrate de que el archivo del modelo (final_model.joblib) esté subido y renombrado a model.joblib
 model = load_model('model.joblib')
 
 # --- Barra Lateral para las Entradas del Usuario ---
@@ -36,19 +36,17 @@ with st.sidebar:
     """)
 
     # Slider para el % iron concentrate
-    # Usamos un nombre de variable interno más limpio
-    iron_concentrate_input = st.slider(
+    ironconcentrate = st.slider(
         label='% de concentración de hierro',
-        min_value=60.0, # Aseguramos que sea float
-        max_value=70.0, # Aseguramos que sea float
-        value=66.0, # Valor inicial (aseguramos que sea float)
-        step=1 # Cambiado el paso a 0.1
+        min_value=0,
+        max_value=100,
+        value=66, # Valor inicial
+        step=1
     )
     st.caption("Representa el porcentaje de concentración de hierro.")
 
     # Slider para el flujo de amina
-    # Usamos un nombre de variable interno más limpio
-    amina_flow_input = st.slider(
+    aminaflow = st.slider(
         label='Flujo de amina',
         min_value=240,
         max_value=740,
@@ -58,8 +56,7 @@ with st.sidebar:
     st.caption("Flujo de amina")
 
     # Slider para la Flotation Column Air Flow
-    # Usamos un nombre de variable interno más limpio
-    flotation_column_airflow_input = st.slider(
+    flotationcolumnairflow = st.slider(
         label='Flujo de aire en la columa de flotación',
         min_value=-175,
         max_value=305,
@@ -73,10 +70,10 @@ st.title("🧪 Predictor de procentage de sílica")
 st.markdown("""
 ¡Bienvenido! Esta aplicación utiliza un modelo de machine learning para predecir el porcentaje de concentración de silica en el proceso de lixiviación basándose en parámetros operativos clave.
 
-**Esta herramienta puede ayudar a los ingenieros de procesos y operadores a:**
-- **Optimizar** las condiciones de operación para obtener el porcentage de silica final.
-- **Predecir** el impacto de los cambios en el proceso antes de implementarlos.
-- **Solucionar** problemas potenciales simulando diferentes escenarios.
+*Esta herramienta puede ayudar a los ingenieros de procesos y operadores a:*
+- *Optimizar* las condiciones de operación para obtener el porcentage de silica final.
+- *Predecir* el impacto de los cambios en el proceso antes de implementarlos.
+- *Solucionar* problemas potenciales simulando diferentes escenarios.
 """)
 
 # --- Lógica de Predicción ---
@@ -86,11 +83,10 @@ if model is not None:
     if st.button('🚀 Predecir el porcentaje de silica', type="primary"):
         # Creamos un DataFrame de pandas con las entradas del usuario.
         # ¡Es crucial que los nombres de las columnas coincidan exactamente con los que el modelo espera!
-        # Asegúrate de que estas claves coincidan con los nombres de las características usadas para entrenar el modelo.
         df_input = pd.DataFrame({
-            'Amina Flow': [amina_flow_input],
-            'Flotation Column 03 Air Flow': [flotation_column_airflow_input],
-            '% Iron Concentrate': [iron_concentrate_input]
+            '% Iron Concentrate': [ironconcentrate],
+            'Amina Flow': [aminaflow],
+            'Flotation Column 03 Air Flow': [flotationcolumnairflow]
         })
 
         # Hacemos la predicción
@@ -98,8 +94,8 @@ if model is not None:
             prediction_value = model.predict(df_input)
             st.subheader("📈 Resultado de la Predicción")
             # Mostramos el resultado en un cuadro de éxito, formateado a dos decimales.
-            st.success(f"**Porcentaje Predicho:** `{prediction_value[0]:.2f}%`")
-            st.info("Este valor representa el porcentaje de silica presente en la operación.")
+            st.success(f"*Porcentaje Predicho:* {prediction_value[0]:.2f}%")
+            st.info("Este valor representa el porcentaje de silica presente en el operación.")
         except Exception as e:
             st.error(f"Ocurrió un error durante la predicción: {e}")
 else:
@@ -110,15 +106,15 @@ st.divider()
 # --- Sección de Explicación ---
 with st.expander("ℹ️ Sobre la Aplicación"):
     st.markdown("""
-    **¿Cómo funciona?**
+    *¿Cómo funciona?*
 
-    1.  **Datos de Entrada:** Proporcionas los parámetros operativos clave usando los deslizadores en la barra lateral.
-    2.  **Predicción:** El modelo de machine learning pre-entrenado recibe estas entradas y las analiza basándose en los patrones que aprendió de datos históricos.
-    3.  **Resultado:** La aplicación muestra el porcentaje final predicho.
+    1.  *Datos de Entrada:* Proporcionas los parámetros operativos clave usando los deslizadores en la barra lateral.
+    2.  *Predicción:* El modelo de machine learning pre-entrenado recibe estas entradas y las analiza basándose en los patrones que aprendió de datos históricos.
+    3.  *Resultado:* La aplicación muestra el porcentaje final predicho.
 
-    **Detalles del Modelo:**
+    *Detalles del Modelo:*
 
-    * **Tipo de Modelo:** `Regression Model` (XGBoost Optimizado)
-    * **Propósito:** Predecir el valor continuo del rendimiento de la destilación.
-    * **Características Usadas:** Porcentaje de concentración de acero, Flujo de amina y Flujo de aire en la columna de flotación.
+    * *Tipo de Modelo:* Regression Model (XGBoost Optimizado)
+    * *Propósito:* Predecir el valor continuo del rendimiento de la destilación.
+    * *Características Usadas:* Porcentaje de concentración de acero, Flujo de amina y Flujo de aire en la columna de flotación.
     """)
