@@ -39,10 +39,10 @@ with st.sidebar:
     # Usamos un nombre de variable interno más limpio
     iron_concentrate_input = st.slider(
         label='% de concentración de hierro',
-        min_value=60.00, # Aseguramos que sea float
-        max_value=70.00, # Aseguramos que sea float
-        value=66.00, # Valor inicial (aseguramos que sea float)
-        step=0.05 # Cambiado el paso a 0.1
+        min_value=60.00, 
+        max_value=70.00, 
+        value=66.00,
+        step=0.05 
     )
     st.caption("Representa el porcentaje de concentración de hierro.")
 
@@ -69,7 +69,7 @@ with st.sidebar:
     st.caption("Flujo de aire en la columna de flotación")
 
 # --- Contenido de la Página Principal ---
-st.title("🧪 Predictor de procentage de sílica")
+st.title("🧪 Predictor de procentaje de sílica")
 st.markdown("""
 ¡Bienvenido! Esta aplicación utiliza un modelo de machine learning para predecir el porcentaje de concentración de sílica en el proceso de lixiviación basándose en parámetros operativos clave.
 
@@ -83,7 +83,7 @@ st.markdown("""
 # Solo intentamos predecir si el modelo se ha cargado correctamente.
 if model is not None:
     # El botón principal que el usuario presionará para obtener un resultado.
-    if st.button('🚀 Predecir el porcentaje de silica', type="primary"):
+    if st.button('🚀 Predecir el porcentaje de sílica', type="primary"):
         # Creamos un DataFrame de pandas con las entradas del usuario.
         # ¡Es crucial que los nombres de las columnas coincidan exactamente con los que el modelo espera!
         # Asegúrate de que estas claves coincidan con los nombres de las características usadas para entrenar el modelo.
