@@ -42,7 +42,7 @@ with st.sidebar:
         min_value=60.0, # Aseguramos que sea float
         max_value=70.0, # Aseguramos que sea float
         value=66.0, # Valor inicial (aseguramos que sea float)
-        step=0.1 # Cambiado el paso a 0.1
+        step=1 # Cambiado el paso a 0.1
     )
     st.caption("Representa el porcentaje de concentración de hierro.")
 
