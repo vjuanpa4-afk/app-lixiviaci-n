@@ -32,7 +32,7 @@ model = load_model('model.joblib')
 with st.sidebar:
     st.header("⚙️ Parámetros de Entrada")
     st.markdown("""
-    Ajusta los deslizadores para que coincidan con los parámetros operativos de la lixiviación.
+    Ajusta los deslizadores para que coincidan con los parámetros operativos de lixiviación.
     """)
 
     # Slider para el % iron concentrate
@@ -71,10 +71,10 @@ with st.sidebar:
 # --- Contenido de la Página Principal ---
 st.title("🧪 Predictor de procentage de sílica")
 st.markdown("""
-¡Bienvenido! Esta aplicación utiliza un modelo de machine learning para predecir el porcentaje de concentración de silica en el proceso de lixiviación basándose en parámetros operativos clave.
+¡Bienvenido! Esta aplicación utiliza un modelo de machine learning para predecir el porcentaje de concentración de sílica en el proceso de lixiviación basándose en parámetros operativos clave.
 
 **Esta herramienta puede ayudar a los ingenieros de procesos y operadores a:**
-- **Optimizar** las condiciones de operación para obtener el porcentage de silica final.
+- **Optimizar** las condiciones de operación para obtener el porcentage de sílica final.
 - **Predecir** el impacto de los cambios en el proceso antes de implementarlos.
 - **Solucionar** problemas potenciales simulando diferentes escenarios.
 """)
@@ -100,7 +100,7 @@ if model is not None:
             st.subheader("📈 Resultado de la Predicción")
             # Mostramos el resultado en un cuadro de éxito, formateado a dos decimales.
             st.success(f"**Porcentaje Predicho:** `{prediction_value[0]:.2f}%`")
-            st.info("Este valor representa el porcentaje de silica presente en la operación.")
+            st.info("Este valor representa el porcentaje de sílica presente en la operación.")
         except Exception as e:
             st.error(f"Ocurrió un error durante la predicción: {e}")
 else:
