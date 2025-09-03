@@ -61,7 +61,7 @@ with st.sidebar:
     # Usamos un nombre de variable interno más limpio
     flotation_column_airflow_input = st.slider(
         label='Flujo de aire en la columa de flotación',
-        min_value=-175,
+        min_value=175,
         max_value=305,
         value=250,
         step=1
